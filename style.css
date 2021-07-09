@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=STIX+Two+Math&display=swap');
+body{
+    background-image: url(image/cloud.jpg);
+}
+#box{
+    background-color: #92e6a7;
+    width: 21rem;
+}
+.mhd{
+    font-family: 'Krona One', sans-serif;
+    color: #480ca8;
+}
+.hd{
+    text-align: center;
+    font-weight: 600;
+    font-family: 'STIX Two Math', serif;
+}
+p{
+    margin-left: 22px;
+    font-weight: 550;
+    font-size: 1.2rem;
+}
+@media(min-width:992px) and (max-width:1400px){
+    #box{
+        width: 22rem;
+    } 
+}
+@media(max-width:414px){
+    #box{
+        width: 24.3rem;
+    }  
+}
+@media(max-width:384px){
+    #box{
+        width: 22.5rem;
+    }
+}
+@media(max-width:375px){
+    #box{
+        width: 22rem;
+    }  
+}
+@media(max-width:360px){
+    #box{
+        width: 21rem;
+    }  
+}
+@media(max-width:320px){
+    #box{
+        width: 18.5rem;
+    }
+    .hd{
+        font-size: 20px;
+    }
+    p{
+        font-size: 1rem;
+    }
+}
+

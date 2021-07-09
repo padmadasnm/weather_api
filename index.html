@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weatherApi</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e586f94614.js" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+    <section class="whether">
+        <div class="container">
+            <div class="row">
+                <section class="head">
+                    <h2 class="text-center text-uppercase fw-bold mt-5 mhd">Weather Finder</h2>
+                </section>
+                <div class="col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-12"></div>
+                <div class="col-xxl-6 col-lg-4 col-md-6 col-sm-4 col-12">
+                    <section class="wthr_input">
+                        <div class="input-group mt-4 inpt">
+                            <input type="text" class="form-control in1" id="dist_name" placeholder="Enter Your City"
+                                aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button type="button" class="btn btn-primary bt" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal" id="button-addon2" onclick="getDistrict()">
+                                Search
+                            </button>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-xxl-3 col-lg-4 col-md-3 col-sm-4 col-12"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row abx">
+                <div class="col-xxl-4 col-lg-4 col-md-3 col-sm-4 col-12"></div>
+                <div class="col-xxl-4 col-lg-4 col-md-6 col-sm-4 col-12 mt-4">
+                    <section class="wthr_output" id="res">
+
+                    </section>
+                </div>
+                <div class="col-xxl-4 col-lg-4 col-md-3 col-sm-4 col-12"></div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+
+<script>
+    function populate(user) {
+        let temp = user.main.temp;
+        let dist = user.name;
+        let wthr = user.weather[0].main;
+        let wthr_icon = user.weather[0].icon;
+        let feel = user.main.feels_like;
+        let wind = user.wind.speed;
+        let prsur = user.main.pressure;
+        let html_res = ""
+        html_res += `
+    <div class="card" id="box">
+        <div class="card-body">
+            <h4 class="card-title text-uppercase hd">${dist}</h4><br>
+            <p class="card-text dtls">Weather: <img src="https://openweathermap.org/img/wn/${wthr_icon}@2x.png" alt=""> ${wthr}</p>
+            <p class="card-text"><i class="fas fa-thermometer-empty"></i> Temperature:${temp}°C</p>
+            <p class="card-text"><i class="fas fa-thermometer-three-quarters"></i> Feels Like:${feel}°C</p>
+            <p class="card-text"><i class="fas fa-wind"></i> Wind:${wind}km/h</p>
+            <p class="card-text"><i class="fas fa-tachometer-alt"></i> Pressure:${prsur}hpa</p>
+        </div>
+    </div>
+`
+        document.querySelector("#res").innerHTML = html_res;
+
+    }
+
+    function getDistrict() {
+        let district_name = dist_name.value
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${district_name}&units=metric&appid=822ac31ce26cfcb6711bc0a125ce45df`).then(data => {
+            if (!(data.ok)) {
+                throw new Error(`failed to fetch data ${data.status}`)
+            }
+            else {
+                return data.json()
+            }
+        }).then(res => populate(res)).then(data => console.log(data)).catch(error => console.log(error.massage))
+    }
+
+
+</script>
+
+</html>
